@@ -2,7 +2,11 @@
 Forward systemd journals to Loggly
 
 ## Usage
-`./journald-forwarder -token [LogglyToken] -logFile [where to place logs for this app]`
+`./journald-forwarder -token [LogglyToken] -logFile [where to place logs for this app] -tag [Loggly tag] -logFile [path to logfile]`
+
+### Defaults
+`-logFile = /var/log/journald-forwarder.log`
+`-tag = ""`
 
 An example systemd script is available in `packaging/systemd`, which works on CoreOS.
 

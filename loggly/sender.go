@@ -15,7 +15,13 @@ type LogglySender struct {
 
 func NewSender(token string, tag string) *LogglySender {
 
-	interped := fmt.Sprintf("https://logs-01.loggly.com/inputs/%s/%s", token, tag)
+	interped := ""
+	switch tag {
+	case "": interped = fmt.Sprintf("https://logs-01.loggly.com/inputs/%s", token)
+	default: interped = fmt.Sprintf("https://logs-01.loggly.com/inputs/%s/tag/%s/", token, tag)
+	}
+
+	log.Println(fmt.Sprintf("Will send data to %s", interped))
 
 	return &LogglySender{
 		Uri:    interped,
