@@ -13,9 +13,9 @@ type LogglySender struct {
 	Uri    string
 }
 
-func NewSender(token string) *LogglySender {
+func NewSender(token string, tag string) *LogglySender {
 
-	interped := fmt.Sprintf("https://logs-01.loggly.com/inputs/%s", token)
+	interped := fmt.Sprintf("https://logs-01.loggly.com/inputs/%s/%s", token, tag)
 
 	return &LogglySender{
 		Uri:    interped,

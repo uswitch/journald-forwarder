@@ -12,6 +12,7 @@ import (
 
 var token = flag.String("token", "", "Loggly Token")
 var logFile = flag.String("logfile", "/var/log/journald-forwarder.log", "Path to log file to write")
+var tag = flag.String("tag", "", "What tag to use on Loggly")
 
 func main() {
 	flag.Parse()
@@ -31,7 +32,7 @@ func main() {
 	log.SetOutput(f)
 
 	c := make(chan journald.JournalEntry, 2)
-	sender := loggly.NewSender(*token)
+	sender := loggly.NewSender(*token, *tag)
 	go journald.CollectJournal(c)
 	go loggly.ProcessJournal(c, *sender)
 
