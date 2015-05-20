@@ -1,0 +1,3 @@
+#!/bin/sh
+go clean -r -i github.com/uswitch/journald-forwarder
+CGO_ENABLED=1 go build -a -installsuffix cgo -gccgoflags '-static-libgo -s' -o /build/journald-forwarder github.com/uswitch/journald-forwarder

@@ -1,0 +1,4 @@
+#!/bin/sh
+docker build -t journald-forwarder .
+mkdir -pv bin
+docker run -v $PWD/bin:/build journald-forwarder /go/src/app/packaging/build
