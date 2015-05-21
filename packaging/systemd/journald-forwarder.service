@@ -4,6 +4,6 @@ After=docker.service
 
 [Service]
 ExecStartPre=-/bin/mkdir -pv /opt/uswitch/journald-forwarder
-ExecStartPre=-/usr/bin/curl -o /opt/uswitch/journald-forwarder/journald-forwarder https://github.com/uswitch/journald-forwarder/releases/download/v0.2/journald-forwarder
+ExecStartPre=-/usr/bin/curl -L -o /opt/uswitch/journald-forwarder/journald-forwarder https://github.com/uswitch/journald-forwarder/releases/download/v0.2/journald-forwarder
 ExecStartPre=-/bin/chmod +x /opt/uswitch/journald-forwarder/journald-forwarder
 ExecStart=/opt/uswitch/journald-forwarder/journald-forwarder -token [token] -tag [tag]
