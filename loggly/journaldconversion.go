@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func ProcessJournal(c chan journald.JournalEntry, sender LogglySender) {
+func ProcessJournal(c chan journald.JournalEntry, uri string) {
 	for msg := range c {
 
 		loggly_entry := JournalEntry{
@@ -62,7 +62,7 @@ func ProcessJournal(c chan journald.JournalEntry, sender LogglySender) {
 		if err != nil {
 
 		} else {
-			SendEvent(string(json_entry)[:], sender)
+			SendEvent(string(json_entry)[:], uri)
 		}
 	}
 }

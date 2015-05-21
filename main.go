@@ -32,9 +32,9 @@ func main() {
 	log.SetOutput(f)
 
 	c := make(chan journald.JournalEntry, 2)
-	sender := loggly.NewSender(*token, *tag)
+	uri := loggly.GenerateUri(*token, *tag)
 	go journald.CollectJournal(c)
-	go loggly.ProcessJournal(c, *sender)
+	go loggly.ProcessJournal(c, uri)
 
 	for {
 		time.Sleep(1 * time.Second)

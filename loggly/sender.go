@@ -6,40 +6,49 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"encoding/json"
 )
 
-type LogglySender struct {
-	Client http.Client
-	Uri    string
+
+type Response struct {
+	Response string `json:"response"`
+
 }
 
-func NewSender(token string, tag string) *LogglySender {
+func GenerateUri(token string, tag string) string {
 
-	interped := ""
+	uri := ""
 	switch tag {
-	case "": interped = fmt.Sprintf("https://logs-01.loggly.com/inputs/%s", token)
-	default: interped = fmt.Sprintf("https://logs-01.loggly.com/inputs/%s/tag/%s/", token, tag)
+	case "": uri = fmt.Sprintf("https://logs-01.loggly.com/inputs/%s", token)
+	default: uri = fmt.Sprintf("https://logs-01.loggly.com/inputs/%s/tag/%s/", token, tag)
 	}
 
-	log.Println(fmt.Sprintf("Will send data to %s", interped))
+	log.Println(fmt.Sprintf("Will send data to %s", uri))
 
-	return &LogglySender{
-		Uri:    interped,
-		Client: http.Client{},
-	}
+	return uri
 }
 
-func SendEvent(entry string, sender LogglySender) {
-	req, err := http.NewRequest("POST", sender.Uri, ioutil.NopCloser(strings.NewReader(entry)))
-	if err != nil {
-		log.Fatalf("Could not set up http post: %v", err)
-	}
-	req.Header.Add("content-type", "application/x-www-form-urlencoded")
-	resp, err := sender.Client.Do(req)
+func SendEvent(entry string, uri string) {
+	resp, err := http.Post(uri, "application/x-www-form-urlencoded", ioutil.NopCloser(strings.NewReader(entry)) )
 	if err != nil {
 		log.Println("Unable to send data: %v", err)
 		log.Println(entry)
+		return
 	}
-	if resp != nil {
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Println("Failed to get a response: %v", err)
+		return
 	}
+	var response Response
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		log.Println("Invalid response: %v", err)
+		return
+	}
+	if response.Response != "ok" {
+		log.Println("Response was: %v", response.Response)
+	}
+
 }
