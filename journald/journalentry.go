@@ -49,4 +49,7 @@ type JournalEntry struct {
 	ErrNo                   int    `json:"ERRNO,string,omitempty"`
 	SyslogFacility          string `json:"SYSLOG_FACILITY,omitempty"`
 	SyslogIdentifier        string `json:"SYSLOG_IDENTIFIER,omitempty"`
+	ContainerId             string `json:"CONTAINER_ID,omitempty"`
+	ContainerFullId         string `json:"CONTAINER_ID_FULL,omitempty"`
+	ContainerName           string `json:"CONTAINER_NAME,omitempty"`
 }

@@ -57,6 +57,9 @@ func ProcessJournal(c chan journald.JournalEntry, uri string) {
 			ErrNo:                   msg.ErrNo,
 			SyslogFacility:          msg.SyslogFacility,
 			SyslogIdentifier:        msg.SyslogIdentifier,
+			ContainderId:            msg.ContainerId,
+			ContainerFullId:         msg.ContainerFullId,
+			ContainerName:           msg.ContainerName,
 		}
 		json_entry, err := json.Marshal(loggly_entry)
 		if err != nil {

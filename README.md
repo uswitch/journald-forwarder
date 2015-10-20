@@ -13,6 +13,10 @@ An example systemd script is available in [packaging/systemd](https://github.com
 ## Building
 The easiest way is to run `packaging/docker` which will statically compile journald-forwarder to a bin folder.
 
+## Dev notes
+
+The forwarder first marshals the json into a journald.JournalEntry struct. Then copies the data into loggly.JournalEntry struct and finally marshals into json. This is done to translate the field names from journal names (e.g. ___PID) into nicer loggly names (e.g. Pid) and additionally to convert the timestamp into miliseconds.
+
 ## License
 
 journald-forwarder is released under the Apache 2.0 license. See the LICENSE file for details.

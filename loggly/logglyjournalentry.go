@@ -50,4 +50,7 @@ type JournalEntry struct {
 	ErrNo                   int       `json:"errNo,omitempty"`
 	SyslogFacility          string    `json:"facility,omitempty"`
 	SyslogIdentifier        string    `json:"syslogIdentifier,omitempty"`
+	ContainderId            string    `json:"containerId,omitempty"`
+	ContainerFullId         string    `json:"containerFullId,omitempty"`
+	ContainerName           string    `json:"containerName,omitempty"`
 }
