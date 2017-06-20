@@ -41,7 +41,7 @@ type JournalEntry struct {
 	ObjectSystemdUserInit   string `json:"OBJECT_SYSTEMD_USER_INIT,omitempty"`
 	ObjectSystemdOwnerUid   int    `json:"OBJECT_SYSTEMD_OWNER_UID,string,omitempty"`
 	Message                 string `json:"MESSAGE,omitempty"`
-	MessageId               int    `json:"MESSAGE_ID,string,omitempty"`
+	MessageId               string `json:"MESSAGE_ID,omitempty"`
 	Priority                int    `json:"PRIORITY,string,omitempty"`
 	CodeFile                string `json:"CODE_FILE,omitempty"`
 	CodeLine                string `json:"CODE_LINE,omitempty"`
