@@ -1,26 +1,26 @@
 package loggly
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
-	"encoding/json"
 )
-
 
 type Response struct {
 	Response string `json:"response"`
-
 }
 
 func GenerateUri(token string, tag string) string {
 
 	uri := ""
 	switch tag {
-	case "": uri = fmt.Sprintf("https://logs-01.loggly.com/inputs/%s", token)
-	default: uri = fmt.Sprintf("https://logs-01.loggly.com/inputs/%s/tag/%s/", token, tag)
+	case "":
+		uri = fmt.Sprintf("https://logs-01.loggly.com/inputs/%s", token)
+	default:
+		uri = fmt.Sprintf("https://logs-01.loggly.com/inputs/%s/tag/%s/", token, tag)
 	}
 
 	log.Println(fmt.Sprintf("Will send data to %s", uri))
@@ -29,7 +29,7 @@ func GenerateUri(token string, tag string) string {
 }
 
 func SendEvent(entry string, uri string) {
-	resp, err := http.Post(uri, "application/x-www-form-urlencoded", ioutil.NopCloser(strings.NewReader(entry)) )
+	resp, err := http.Post(uri, "application/x-www-form-urlencoded", ioutil.NopCloser(strings.NewReader(entry)))
 	if err != nil {
 		log.Println("Unable to send data: %v", err)
 		log.Println(entry)
