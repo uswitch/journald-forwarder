@@ -52,4 +52,5 @@ type JournalEntry struct {
 	ContainerId             string `json:"CONTAINER_ID,omitempty"`
 	ContainerFullId         string `json:"CONTAINER_ID_FULL,omitempty"`
 	ContainerName           string `json:"CONTAINER_NAME,omitempty"`
+	ContainerTag            string `json:"CONTAINER_TAG,omitempty"`
 }
