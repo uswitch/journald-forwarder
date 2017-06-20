@@ -60,6 +60,7 @@ func ProcessJournal(c chan journald.JournalEntry, uri string) {
 			ContainderId:            msg.ContainerId,
 			ContainerFullId:         msg.ContainerFullId,
 			ContainerName:           msg.ContainerName,
+			ContainerTag:            msg.ContainerTag,
 		}
 		json_entry, err := json.Marshal(loggly_entry)
 		if err != nil {

@@ -3,7 +3,6 @@ package journald
 import "os/exec"
 import "encoding/json"
 import "bufio"
-import "strings"
 import "log"
 
 const DefaultSocket = "/var/run/journald-test.sock"
@@ -14,15 +13,19 @@ func CollectJournal(c chan JournalEntry) {
 	if err != nil {
 		log.Fatalf("Could not run journalctl: %v", err)
 	}
-	cmd.Start()
+	err = cmd.Start()
+	if err != nil {
+		log.Fatalf("Could not run journalctl(2): %v", err)
+	}
 	scanner := bufio.NewScanner(stdout)
 	for scanner.Scan() {
 		msg := scanner.Text()
 		var entry JournalEntry
-		err := json.Unmarshal([]byte(strings.Replace(msg, "data:", "", 1)), &entry)
-		if err != nil {
-			// Ignore blank lines
-		} else {
+		if len(msg) > 5 {
+			err := json.Unmarshal([]byte(msg[5:]), &entry)
+			if err != nil {
+				log.Fatalln("unmarshal error", err)
+			}
 			c <- (entry)
 		}
 	}
